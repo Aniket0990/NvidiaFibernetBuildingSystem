@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class AdminLogin extends JFrame {
 
@@ -30,6 +32,7 @@ public class AdminLogin extends JFrame {
 	public AdminLogin() {
 		createFrame();
 		createComponents();
+		lookAndFeel();
 	}
 
 	public void createFrame() {
@@ -119,14 +122,10 @@ public class AdminLogin extends JFrame {
 				String username1 = username.getText();
 				String password1 = new String(pass.getText());
 
-				// Validate using DatabaseConnection
 				boolean isValid = dbAdmin.validateAdmin(username1, password1);
 
 				if (isValid) {
 					JOptionPane.showMessageDialog(login, "Login Successful!");
-					// login.dispose(); // Close Login Page
-//	                  
-					// Show Home Page
 					new HomeGUI();
 
 				} else {
@@ -135,14 +134,6 @@ public class AdminLogin extends JFrame {
 				}
 			}
 		});
-
-//		login.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				handlelogin();
-//			}
-//		});
 
 		goback = new JButton("GoBack");
 		goback.setFont(new Font("Arial", Font.BOLD, 15));
@@ -167,27 +158,20 @@ public class AdminLogin extends JFrame {
 		add(goback);
 
 	}
-
-//	private void handlelogin() {
-//		
-//		
-//		String user = username.getText().trim();
-//		String phone = phno.getText().trim();
-//
-//		if (user.isEmpty() || phone.isEmpty()) {
-//			JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
-//			return;
-//		}
-//		if (!phone.matches("\\d{10}")) {
-//			JOptionPane.showMessageDialog(this, "Enter a valid 10-digit phone number!", "Error",
-//					JOptionPane.ERROR_MESSAGE);
-//			return;
-//		}
-//     
-//		JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-//	  new HomeGUI();
-//	}
-//	
+	
+	public void lookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {

@@ -5,8 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class dbLogin {
-
+public class dbUserDashboard {
 	public static boolean validateUserlogin(String username, String mobile) {
 		boolean isValid = false;
 
@@ -22,7 +21,7 @@ public class dbLogin {
 			String query = "SELECT * FROM sign_in WHERE username = ? AND mobilenumber = ?";
 			PreparedStatement preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, username); 
-			preparedStatement.setString(2, mobile); 
+			preparedStatement.setString(2, mobile);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

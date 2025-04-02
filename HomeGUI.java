@@ -1,11 +1,11 @@
 package projectnvidia;
 
 import java.awt.Color;
-
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -22,8 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
-//JFrame used to display the frame and contents
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class HomeGUI extends JFrame {
 
@@ -35,47 +35,42 @@ public class HomeGUI extends JFrame {
 	private Color adminLoginColor = Color.magenta;
 	private Color newConnectioncolor = Color.blue;
 
-// add a constructor and inside that we call the methods
 	public HomeGUI() {
 		SetUpFrame();
 		intializeButtonComponents();
 		addComponents();
 		initializeListeners();
+		lookAndFeel();
 
 	}
 
-//create method to setup frame by providing functions
-
 	private void SetUpFrame() {
 		setSize(1920, 1080);
+		Image image = Toolkit.getDefaultToolkit()
+				.getImage("D:\\Qspiders\\Project\\NvidiaFibernetBuildingSystem\\src\\main\\java\\icons\\logo.jpg");
+
+		setIconImage(image);
 		setVisible(true);
 		setTitle("Home");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setContentPane(createBackgroundPanel());
 	}
 
-//create method for adding background image
 	private JPanel createBackgroundPanel() {
-//create a inner class of JPanel
 
 		return new JPanel() {
 			@Override
-//Graphics is used to providing Graphical rendering operations
 
 			protected void paintComponent(Graphics g) {
-//ImageIcon used to paint icons from image which is provided by us.
 				ImageIcon imageIcon = new ImageIcon(getClass().getResource("/icons/logo.jpg"));
 
-//Image that represent graphical images.
 				Image image = imageIcon.getImage();
 
-//getWidth/Height Returns the current width/height of this component.
 				double panelWidth = getWidth();
 				double panelHeight = getHeight();
 				double imageWidth = image.getWidth(this);
 				double imageHeight = image.getHeight(this);
 
-//Math used for performing basic numeric operations
 				double scale = Math.max(panelWidth / imageWidth, panelHeight / imageHeight);
 
 				int scaledWidth = (int) (imageWidth * scale);
@@ -84,12 +79,9 @@ public class HomeGUI extends JFrame {
 				int x = (int) ((panelWidth - scaledWidth) / 2);
 				int y = (int) ((panelHeight - scaledHeight) / 2);
 
-//drawImage used to load and draw the image by providing above scales inside()
 				g.drawImage(image, x, y, scaledWidth, scaledHeight, this);
 
-//setColor set current color to the specified color. 
 				g.setColor(new Color(0, 0, 0, 150));
-//fillRect used to fill color to all part of the image
 				g.fillRect(0, 0, getWidth(), getHeight());
 			}
 		};
@@ -115,11 +107,11 @@ public class HomeGUI extends JFrame {
 //            }
 //        };
 //    }
-	
+
 	private void intializeButtonComponents() {
-		exsistingUserButton = createStyleButton("Existing User?", exsistingUserColor);
-		newConnectionButton = createStyleButton("Buy New Connection: ", newConnectioncolor);
-		adminLoginButton = createStyleButton("Admin Sign in: ", adminLoginColor);
+		exsistingUserButton = createStyleButton("Existing User", exsistingUserColor);
+		newConnectionButton = createStyleButton("Buy Connection", newConnectioncolor);
+		adminLoginButton = createStyleButton("Admin Sign in", adminLoginColor);
 	}
 
 	private JButton createStyleButton(String text, Color backgroundColor) {
@@ -129,10 +121,8 @@ public class HomeGUI extends JFrame {
 		button.setForeground(Color.black);
 		button.setFocusable(false);
 
-		button.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(Color.WHITE, 2),
-				BorderFactory.createEmptyBorder(12, 25, 12, 25)
-				));
+		button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 2),
+				BorderFactory.createEmptyBorder(12, 25, 12, 25)));
 
 		button.addMouseListener(new MouseAdapter() {
 
@@ -158,7 +148,7 @@ public class HomeGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				handledExsistingUser();
 			}
-			
+
 		});
 		adminLoginButton.addActionListener(new ActionListener() {
 
@@ -166,7 +156,7 @@ public class HomeGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				handledAdminUser();
 			}
-			
+
 		});
 		newConnectionButton.addActionListener(new ActionListener() {
 
@@ -174,35 +164,38 @@ public class HomeGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				handledConnection();
 			}
-			
+
 		});
 	}
 
-// create method for adding some component
-	private void addComponents() {
+	public void lookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-//we add mainPanel where we control structure/text/buttons/every thing
+	private void addComponents() {
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setOpaque(false);
-
-//setLayout used to set up the layout to our page/GUI and Box/Flow Layout used to apply layout in different direction 
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		titlePanel.setOpaque(false);
 
-// for adding title/text we use JLabel
-
 		JLabel label = new JLabel("Welcome To Nvidia Fibernet");
 		label.setFont(new Font("Arial", Font.BOLD, 24));
 
-// setForeground() used to adding color or styling to text
-
 		label.setForeground(Color.WHITE);
 		titlePanel.add(label);
-
-//to add space from vertical we use this method and giving a size
 
 		mainPanel.add(Box.createVerticalStrut(185));
 		mainPanel.add(titlePanel);
@@ -218,34 +211,40 @@ public class HomeGUI extends JFrame {
 	}
 
 	private void handledExsistingUser() {
-		int choice = JOptionPane.showConfirmDialog(this, "Do you want to got to login page?", "Confirm",
-				JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+		int choice = JOptionPane.showConfirmDialog(this, "Existing User?", "Confirm", JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
 		if (choice == JOptionPane.YES_OPTION) {
-			JOptionPane.showMessageDialog(this, "Going To Login GUI....", "Message", JOptionPane.INFORMATION_MESSAGE);
 			new LoginGUI();
+		} else {
+
+			JOptionPane.showMessageDialog(null, "Please Sign Up", "Alert", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+
 	private void handledAdminUser() {
-		int choice = JOptionPane.showConfirmDialog(this, "Do you want to Login as a Admin?", "Confirm",
-				JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+		int choice = JOptionPane.showConfirmDialog(this, "Are You Admin?", "Confirm", JOptionPane.YES_NO_OPTION,
+				JOptionPane.INFORMATION_MESSAGE);
 		if (choice == JOptionPane.YES_OPTION) {
-			JOptionPane.showMessageDialog(this, "Going To Admin GUI....", "Message", JOptionPane.INFORMATION_MESSAGE);
 			new AdminLogin();
+		} else {
+			JOptionPane.showMessageDialog(this, "Exit", "Alert" + "" + "", JOptionPane.INFORMATION_MESSAGE);
+
 		}
 	}
+
 	private void handledConnection() {
-		int choice = JOptionPane.showConfirmDialog(this, "Do you want to Buy new Connection?", "Confirm",
-				JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+		int choice = JOptionPane.showConfirmDialog(this, "Are You New User?", "Confirm", JOptionPane.YES_NO_OPTION,
+				JOptionPane.INFORMATION_MESSAGE);
 		if (choice == JOptionPane.YES_OPTION) {
-			JOptionPane.showMessageDialog(this, "Going To Connection GUI....", "Message", JOptionPane.INFORMATION_MESSAGE);
-			return;
-			
+			new SignUpGUI();
+		} else {
+			JOptionPane.showMessageDialog(this, "Please Sign In", "Alert", JOptionPane.INFORMATION_MESSAGE);
+
 		}
 	}
 
 	public static void main(String[] args) {
 
-//call a homegui method inside main method to run our project
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override

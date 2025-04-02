@@ -11,30 +11,24 @@ public class dbAdmin {
         boolean isValid = false;
 
         try {
-            // Load MySQL JDBC Driver
             Class.forName("com.mysql.cj.jdbc.Driver");
             
-            // Database Connection Details
             String url = "jdbc:mysql://localhost:3306/nvidiafibernet";
             String dbUser = "root";
             String dbPassword = "root";
 
-            // Establish JDBC Connection
             Connection con = DriverManager.getConnection(url, dbUser, dbPassword);
             
-            // Query to validate user
             String query = "SELECT * FROM admin_sign_in WHERE username = ? AND password = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1, username);  // User-provided username
-            preparedStatement.setString(2, password);  // User-provided password
+            preparedStatement.setString(1, username);  
+            preparedStatement.setString(2, password);  
 
-            // Execute query
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                isValid = true; // User credentials are valid
+                isValid = true;
             }
 
-            // Close connection
             con.close(); 
 
         } catch (ClassNotFoundException e) {

@@ -20,13 +20,13 @@ public class dbSignUp {
 
 	        String query = "SELECT * FROM sign_in WHERE username = ? AND mobilenumber = ? AND city = ?";
 	        PreparedStatement preparedStatement = con.prepareStatement(query);
-	        preparedStatement.setString(1, username); // User-provided username
-	        preparedStatement.setString(2, mobile);   // User-provided mobile number
-	        preparedStatement.setString(3, city);     // User-provided city
+	        preparedStatement.setString(1, username); 
+	        preparedStatement.setString(2, mobile);   
+	        preparedStatement.setString(3, city);    
 
 	        ResultSet resultSet = preparedStatement.executeQuery();
 	        if (resultSet.next()) {
-	            isValid = true; // User credentials are valid
+	            isValid = true; 
 	        }
 
 	        con.close();

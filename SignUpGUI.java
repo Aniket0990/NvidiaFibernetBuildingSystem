@@ -17,13 +17,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class SignUpGUI extends JFrame {
-
-//
-//	JTextField username;
-//
-//	JTextField phno;
 
 	JButton signup;
 
@@ -32,6 +29,7 @@ public class SignUpGUI extends JFrame {
 	public SignUpGUI() {
 		createFrame();
 		createComponents();
+//		lookAndFeel();
 	}
 
 	public void createFrame() {
@@ -128,21 +126,17 @@ public class SignUpGUI extends JFrame {
 		signup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Fetch text from JTextField components
 				String username1 = usernameField.getText();
 				String phone = phoneField.getText();
-				String city = cityDropdown.getSelectedItem().toString(); // Get city from dropdown
+				String city = cityDropdown.getSelectedItem().toString(); 
 
-				// Validate all three fields
 				boolean isValid = dbSignUp.validateUser(username1, phone, city);
 
 				if (isValid) {
-					// Show success message
 					JOptionPane.showMessageDialog(null,
 							"Sign-up Successful!\nUsername: " + username1 + "\nMobile: " + phone + "\nCity: " + city);
 					new HomeGUI();
 				} else {
-					// Show error message if credentials are incorrect
 					JOptionPane.showMessageDialog(null, "Wrong Credentials! Try again.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -174,25 +168,18 @@ public class SignUpGUI extends JFrame {
 		add(cityDropdown);
 
 	}
-
-//	private void handleSignup() {
-//		
-//		
-//		String user = username.getText().trim();
-//		String phone = phno.getText().trim();
-//
-//		if (user.isEmpty() || phone.isEmpty()) {
-//			JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
-//			return;
+//	public void lookAndFeel() {
+//		try {
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (InstantiationException e) {
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		} catch (UnsupportedLookAndFeelException e) {
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
 //		}
-//		if (!phone.matches("\\d{10}")) {
-//			JOptionPane.showMessageDialog(this, "Enter a valid 10-digit phone number!", "Error",
-//					JOptionPane.ERROR_MESSAGE);
-//			return;
-//		}
-//     
-//		JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-//	  new HomeGUI();
 //	}
 //	
 
