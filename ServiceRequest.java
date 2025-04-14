@@ -181,6 +181,14 @@ public class ServiceRequest extends JFrame
 				dateSpinner.setValue(new Date());
 			}
 		});
+		
+//		goBack.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new ServiceRequest().dispose();
+//			}
+//		});
 	}
 	
 	private void createFormRow(String labelText, JComponent component, JPanel formPanel) {
@@ -269,7 +277,7 @@ public class ServiceRequest extends JFrame
 	 private JButton createStyledButton(String text, Color background) {
 	        JButton button = new JButton(text);
 	        button.setBackground(background);
-	        button.setForeground(Color.WHITE);
+	        button.setForeground(Color.BLACK);
 	        button.setFont(new Font("Arial", Font.BOLD, 15));
 
 	        button.setOpaque(true);
@@ -283,7 +291,7 @@ public class ServiceRequest extends JFrame
 
 	            @Override
 	            public void mouseExited(MouseEvent e) {
-	                button.setBackground(background);
+	                button.setBackground(Color.WHITE);
 	            }
 	        });
 	        return button;

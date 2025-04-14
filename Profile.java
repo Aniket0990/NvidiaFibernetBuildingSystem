@@ -307,7 +307,7 @@ public class Profile extends JFrame
 	 private JButton createStyledButton(String text, Color background) {
 	        JButton button = new JButton(text);
 	        button.setBackground(background);
-	        button.setForeground(Color.WHITE);
+	        button.setForeground(Color.BLACK);
 	        button.setFont(new Font("Arial", Font.BOLD, 15));
 
 	        button.setOpaque(true);

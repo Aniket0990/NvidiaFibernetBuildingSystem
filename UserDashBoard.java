@@ -227,8 +227,6 @@ public class UserDashBoard extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				
 				switch (text) 
 				{
 	               case "Pay Bills":

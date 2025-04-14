@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -40,6 +41,11 @@ public class HomePage extends JFrame {
         setSize(1366, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+//        Image image = Toolkit.getDefaultToolkit()
+//				.getImage("D:\\Qspiders\\Project\\NvidiaFibernet\\src\\main\\java\\icons\\logo.jpg");
+//
+//		setIconImage(image);
+        
         setVisible(true);
         setContentPane(createBackgroundPanelImg());
     }

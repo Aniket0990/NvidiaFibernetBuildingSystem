@@ -84,10 +84,10 @@ public class AdminDashboard extends JFrame {
 		;
 		navigationPanel.setBackground(Color.black);
 
-		billGenerator = createStyledButton("Bill Generator", new Color(70, 70, 70), Color.WHITE);
-		accountDetails = createStyledButton("Account Details", new Color(70, 70, 70), Color.WHITE);
-		serviceRequest = createStyledButton("Service Request", new Color(70, 70, 70), Color.WHITE);
-		profile = createStyledButton("Profile", new Color(70, 70, 70), Color.WHITE);
+		billGenerator = createStyledButton("Bill Generator", new Color(70, 70, 70), Color.BLACK);
+		accountDetails = createStyledButton("Account Details", new Color(70, 70, 70), Color.BLACK);
+		serviceRequest = createStyledButton("Service Request", new Color(70, 70, 70), Color.BLACK);
+		profile = createStyledButton("Profile", new Color(70, 70, 70), Color.BLACK);
 
 		navigationPanel.add(billGenerator);
 		navigationPanel.add(accountDetails);
