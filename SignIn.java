@@ -1,4 +1,5 @@
 package nvidia.in;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
+
 public class SignIn extends JFrame {
     private JTextField userNameField, mobileNumberField;
     private JCheckBox termsBox;
@@ -16,7 +18,7 @@ public class SignIn extends JFrame {
         setUpFrame();
         initializeComponents();
         addComponents();
-       
+
     }
 
     private void setUpFrame() {
@@ -50,6 +52,7 @@ public class SignIn extends JFrame {
             }
         };
     }
+
     private void initializeComponents() {
         userNameField = createStyledTextField(20);
         mobileNumberField = createStyledTextField(20);
@@ -68,8 +71,7 @@ public class SignIn extends JFrame {
         field.setFont(new Font("Arial", Font.PLAIN, 14));
         field.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(200, 200, 200)),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
         return field;
     }
 
@@ -80,8 +82,7 @@ public class SignIn extends JFrame {
         button.setFont(new Font("Arial", Font.BOLD, 15));
         button.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.WHITE, 2),
-                BorderFactory.createEmptyBorder(12, 25, 12, 25)
-        ));
+                BorderFactory.createEmptyBorder(12, 25, 12, 25)));
         button.setOpaque(true);
         button.addMouseListener(new MouseAdapter() {
             @Override
@@ -161,18 +162,18 @@ public class SignIn extends JFrame {
 
         signInButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handleSignIn();
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleSignIn();
+            }
+        });
         goBackButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handleGoBack();
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleGoBack();
+            }
+        });
     }
 
     private boolean isValidMobile(String mobile) {
@@ -180,64 +181,59 @@ public class SignIn extends JFrame {
     }
 
     private void handleSignIn() {
-        if (!termsBox.isSelected()) {
-            showError("You must accept the terms and conditions!");
-  
-            return;
-        }
-
         String username = userNameField.getText().trim();
         mobile = mobileNumberField.getText().trim();
-        UserDashBoard.phoneNo = Long.parseLong(mobile);
-        
+        if (username.isEmpty() || mobile.isEmpty()) {
+            showError("Please fill both fields");
+            return;
+        }
         if (!isValidMobile(mobile)) {
             showError("Invalid mobile number! Enter exactly 10 digits.");
             return;
         }
 
+        if (!termsBox.isSelected()) {
+            showError("You must accept the terms and conditions!");
+
+            return;
+        }
+
         String query = "Select * from sign_in where userName = '" + username + "' and mobileNumber = '" + mobile
-				+ "';";
+                + "';";
 
-		ConnectionJDBC connection = new ConnectionJDBC();
+        ConnectionJDBC connection = new ConnectionJDBC();
 
-		try {
-			ResultSet rs = connection.s.executeQuery(query);
+        try {
+            ResultSet rs = connection.s.executeQuery(query);
 
-			if (rs.next()) 
-			{
-				JOptionPane.showMessageDialog(this, "Welcome Back " + username, "Success",
-						JOptionPane.OK_CANCEL_OPTION);
-			
-				
-				   
-				
-				SwingUtilities.invokeLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						try 
-						{
-							new UserDashBoard();
-							dispose();
-						} 
-						catch (SQLException e) {
-							e.printStackTrace();
-						}
-					}
-				});
-			} else {
-				showError("Invalid Credentials");
-			}
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		}    
-		}
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Welcome Back " + username, "Success",
+                        JOptionPane.OK_CANCEL_OPTION);
+
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        try {
+                            new UserDashBoard();
+                            dispose();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } else {
+                showError("Invalid Credentials");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void handleGoBack() {
-        int choice = JOptionPane.showConfirmDialog(this, "Go Back To Main Menu?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(this, "Go Back To Main Menu?", "Confirm", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION) {
             SwingUtilities.invokeLater(() -> new HomePage());
             dispose();
@@ -250,12 +246,12 @@ public class SignIn extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				new SignIn();
-			}
-		});
+
+            @Override
+            public void run() {
+
+                new SignIn();
+            }
+        });
     }
 }
